@@ -205,7 +205,7 @@ static bool IsPlayerBot(Player* player)
     {
         return false;
     }
-    PlayerbotAI* botAI = sPlayerbotsMgr.GetPlayerbotAI(player);
+    PlayerbotAI* botAI = sPlayerbotsMgr->GetPlayerbotAI(player);
     return botAI && botAI->IsBotAI();
 }
 
@@ -225,7 +225,7 @@ static bool IsPlayerRandomBot(Player* player)
     {
         return false;
     }
-    return sRandomPlayerbotMgr.IsRandomBot(player);
+    return sRandomPlayerbotMgr->IsRandomBot(player);
 }
 
 
@@ -667,7 +667,7 @@ static void AdjustBotToRange(Player* bot, int targetRangeIndex, const LevelRange
 
     // Force reset talents if equipment persistence is enabled and bot rolled to max level
     // This is to fix an issue with Playerbots and how Randomization works with Equipment Persistence
-    if (newLevel == g_RandomBotMaxLevel && sPlayerbotAIConfig.equipmentPersistence)
+    if (newLevel == g_RandomBotMaxLevel && sPlayerbotAIConfig->equipmentPersistence)
     {
         PlayerbotFactory tempFactory(bot, newLevel);
         tempFactory.InitTalentsTree(false, true, true);
@@ -675,7 +675,7 @@ static void AdjustBotToRange(Player* bot, int targetRangeIndex, const LevelRange
 
     if (g_BotDistFullDebugMode)
     {
-        PlayerbotAI* botAI = sPlayerbotsMgr.GetPlayerbotAI(bot);
+        PlayerbotAI* botAI = sPlayerbotsMgr->GetPlayerbotAI(bot);
         std::string playerClassName = botAI ? botAI->GetChatHelper()->FormatClass(bot->getClass()) : "Unknown";
         std::string playerFaction = IsAlliancePlayerBot(bot) ? "Alliance" : "Horde";
         LOG_INFO("server.loading",
